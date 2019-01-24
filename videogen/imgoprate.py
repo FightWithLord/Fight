@@ -263,6 +263,83 @@ def genvideo_fromfile_p1():
               ]
     periods = [40, 50, 40]
     for i in range(2 * len(name)):
+        # frame = cv2.imread(img_root + name[i // 2])
+        print("1")
+        # frame = border(frame)
+        period = periods[i // 2]
+        s_scale = script[i][0][0]
+        t_scale = script[i][0][1]
+        s_x = script[i][1][0]
+        t_x = script[i][1][1]
+        s_y = script[i][2][0]
+        t_y = script[i][2][1]
+        print("2")
+        for j in range(period):
+            frame = cv2.imread(img_root + name[i // 2])
+            frame = border(frame)
+            # print((t_x - s_x) / period * j + s_x, (t_y - s_y) / period * j + t_y,
+            #       (t_scale - s_scale) / period * j + s_scale)/Users/kayc/Downloads/jumpres/00411.png
+
+            # person = cv2.flip(person, 1)
+            # person = cv2.imread("/Users/kayc/Downloads/123/%05d_synthesized_image.jpg" % (j + 300))
+            moon = cv2.imread("/Volumes/KHD/Proj/2019年01月16日GoogleHackathon/6矢量化素材/img_70.png", -1)
+            moon = scale(moon, 0.15)
+
+            # person = cv2.imread("/Volumes/KHD/Proj/2019年01月16日GoogleHackathon/6矢量化素材/img_70.png", -1)
+            # print("/Users/kayc/Downloads/123/%05d_synthesized_image.jpg" % (j + 1))
+            # print(person.shape)
+
+            if i in [0, 1]:
+                h_forpng(frame, moon, 50, 400)
+            if i in [2, 3]:
+                h_forpng(frame, moon, 50, 450)
+            if i in [2, 3]:
+                # if j == 0:
+                person = cv2.imread("/Users/kayc/Downloads/jumpres/%05d.png" % (j + 400 + 50 * max(i - 2, 0)), -1)
+                person = cv2.flip(person, 1)
+                person = scale(person, 0.7)
+                # pp = np.ones_like(person) * 255
+                # person = np.concatenate((person, pp), axis=2)
+                h_forpng(frame, person, 140, 70)
+
+            # h_forpng(frame, person, 50, 400)
+            f = crop(frame,
+                     int((t_x - s_x) / period * j + s_x),
+                     int((t_y - s_y) / period * j + s_y),
+                     (t_scale - s_scale) / period * j + s_scale
+                     )
+
+            f = cv2.cvtColor(f, cv2.COLOR_BGR2GRAY)
+            # f = np.hstack([f, f, f])
+
+            # print(img_root + namefmt % (i + 1) + '.jpg')
+
+            videoWriter.write(f)
+    print("3")
+    videoWriter.release()
+
+
+def genvideo_fromfile_p2():
+    img_root = '/Volumes/KHD/Proj/2019年01月16日GoogleHackathon/9p2/x/'
+    fps = 24  # 保存视频的FPS，可以适当调整
+    name = ['1.png', '2.png', '3.png', '4.png']
+    # name = ['1.png']
+
+    # 可以用(*'DVIX')或(*'X264'),如果都不行先装ffmepg: sudo apt-get install ffmepg
+    fourcc = cv2.VideoWriter_fourcc(*'MJPG')
+    videoWriter = cv2.VideoWriter('saveVideo.avi', fourcc, fps, (512, 512), isColor=False)  # 最后一个是保存图片的尺寸
+    # scale, (x_src,x_target)
+    script = [[[1.3, 1.1], [1, 0], [200, 0]],
+              [[1.1, 1.1], [0, 60], [0, 0]],
+              [[1.3, 1.1], [200, 20], [0, 30]],
+              [[1.1, 1.1], [20, 20], [30, 60]],
+              [[1.3, 1.1], [200, 20], [0, 30]],
+              [[1.1, 1.1], [20, 20], [30, 60]],
+              [[1.3, 1.1], [200, 20], [0, 30]],
+              [[1.1, 1.1], [20, 20], [30, 60]]
+              ]
+    periods = [50, 50, 50, 50]
+    for i in range(2 * len(name)):
         frame = cv2.imread(img_root + name[i // 2])
         print("1")
         frame = border(frame)
@@ -284,15 +361,15 @@ def genvideo_fromfile_p1():
             # person = cv2.imread("/Volumes/KHD/Proj/2019年01月16日GoogleHackathon/6矢量化素材/img_70.png", -1)
             # print("/Users/kayc/Downloads/123/%05d_synthesized_image.jpg" % (j + 1))
             # print(person.shape)
-            person = scale(person, 0.35)
-            pp = np.ones_like(person) * 255
-            person = np.concatenate((person, pp), axis=2)
-            if i in [0, 1]:
-                h_forpng(frame, moon, 50, 400)
-            if i in [2, 3]:
-                h_forpng(frame, moon, 50, 450)
-            if i in [2, 3]:
-                h_forpng(frame, person, 300, 100)
+            # person = scale(person, 0.35)
+            # pp = np.ones_like(person) * 255
+            # person = np.concatenate((person, pp), axis=2)
+            # if i in [0, 1]:
+            #     h_forpng(frame, moon, 50, 400)
+            # if i in [2, 3]:
+            #     h_forpng(frame, moon, 50, 450)
+            # if i in [2, 3]:
+            #     h_forpng(frame, person, 300, 100)
 
             # h_forpng(frame, person, 50, 400)
             f = crop(frame,
@@ -310,4 +387,6 @@ def genvideo_fromfile_p1():
     print("3")
     videoWriter.release()
 
-# genvideo_fromfile()
+
+# genvideo_fromfile_p1()
+genvideo_fromfile_p2()
