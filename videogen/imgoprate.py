@@ -10,6 +10,7 @@ namefmt = "%05d_synthesized_image.jpg"
 
 
 def genvideo():
+    img_root = '/Users/kayc/Downloads/images/'
     fps = 24  # 保存视频的FPS，可以适当调整
 
     # 可以用(*'DVIX')或(*'X264'),如果都不行先装ffmepg: sudo apt-get install ffmepg
@@ -36,7 +37,7 @@ def genvideo_fromimgs(imgs):
     videoWriter.release()
 
 
-# genvideo()
+genvideo()
 
 
 #
@@ -243,7 +244,7 @@ def overlap_img(img1, img2):
     cv2.destroyAllWindows()
 
 
-def genvideo_fromfile():
+def genvideo_fromfile_p1():
     img_root = '/Volumes/KHD/Proj/2019年01月16日GoogleHackathon/9p1/'
     fps = 24  # 保存视频的FPS，可以适当调整
     name = ['1.png', '2.png', '3.jpg']
@@ -309,5 +310,4 @@ def genvideo_fromfile():
     print("3")
     videoWriter.release()
 
-
-genvideo_fromfile()
+# genvideo_fromfile()
