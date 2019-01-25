@@ -2,15 +2,14 @@ import os
 import cv2
 import numpy as np
 
-namefmt = "%05d_synthesized_image.jpg"
-
 
 # namefmt = "%d.jpg"
 # img_root = '/Users/kayc/Downloads/123/'  # 这里写你的文件夹路径，比如：/home/youname/data/img/,注意最后一个文件夹要有斜杠
 
 
 def genvideo():
-    img_root = '/Users/kayc/Downloads/images/'
+    namefmt = "%05d_synthesized_image.jpg"
+    img_root = '/Users/kayc/Downloads/images-copy/'
     fps = 24  # 保存视频的FPS，可以适当调整
 
     # 可以用(*'DVIX')或(*'X264'),如果都不行先装ffmepg: sudo apt-get install ffmepg
@@ -37,7 +36,7 @@ def genvideo_fromimgs(imgs):
     videoWriter.release()
 
 
-genvideo()
+# genvideo()
 
 
 #
@@ -389,4 +388,30 @@ def genvideo_fromfile_p2():
 
 
 # genvideo_fromfile_p1()
-genvideo_fromfile_p2()
+# genvideo_fromfile_p2()
+
+def split_video():
+    import cv2
+
+    vc = cv2.VideoCapture('/Users/kayc/Downloads/3.mp4')  # 读入视频文件
+    c = 1
+    n = 1
+
+    if vc.isOpened():  # 判断是否正常打开
+        rval, frame = vc.read()
+    else:
+        rval = False
+
+    timeF = 3  # 视频帧计数间隔频率
+
+    while rval:  # 循环读取视频帧
+        rval, frame = vc.read()
+        if (c % timeF == 0):  # 每隔timeF帧进行存储操作
+            cv2.imwrite('img3/%04d.jpg' % n, frame)  # 存储为图像
+            n += 1
+        c = c + 1
+        cv2.waitKey(1)
+    vc.release()
+
+
+split_video()
