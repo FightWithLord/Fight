@@ -8,18 +8,26 @@ import numpy as np
 
 
 def genvideo():
-    namefmt = "%05d_synthesized_image.jpg"
-    img_root = '/Users/kayc/Downloads/images-copy/'
-    fps = 24  # 保存视频的FPS，可以适当调整
+    back = np.zeros((1280, 720, 3))
+    namefmt = "%04d.png"
+    # namefmt = "%05d_synthesized_image.jpg"
+    # /Users/kayc/Downloads/man/out1/0000.png
+    # /Users/kayc/Downloads/images-p/00012_synthesized_image.jpg
+    # img_root = '/Users/kayc/Downloads/images-p/'
+    img_root = '/Users/kayc/Downloads/man/out1/'
+    fps = 1  # 保存视频的FPS，可以适当调整
 
     # 可以用(*'DVIX')或(*'X264'),如果都不行先装ffmepg: sudo apt-get install ffmepg
     fourcc = cv2.VideoWriter_fourcc(*'MJPG')
-    videoWriter = cv2.VideoWriter('saveVideo.avi', fourcc, fps, (512, 512))  # 最后一个是保存图片的尺寸
+    videoWriter = cv2.VideoWriter('saveVideo.avi', fourcc, fps, (1280, 720))  # 最后一个是保存图片的尺寸
 
-    for i in range(1000):
-        frame = cv2.imread(img_root + namefmt % (i + 1))
+    for i in range(110):
+        frame = cv2.imread(img_root + namefmt % (i + 1), -1)
+        frame = frame[:, :, :3]
+        frame = cv2.resize(frame, (1280, 720))
         # print(img_root + namefmt % (i + 1) + '.jpg')
         videoWriter.write(frame)
+        print(frame.shape)
     videoWriter.release()
 
 
@@ -36,7 +44,7 @@ def genvideo_fromimgs(imgs):
     videoWriter.release()
 
 
-# genvideo()
+genvideo()
 
 
 #
@@ -414,4 +422,57 @@ def split_video():
     vc.release()
 
 
-split_video()
+# split_video()
+
+def dancevideo():
+    # /Users/kayc/Downloads/images-p/00009_synthesized_image.jpg
+    namefmt = "%04d.png"
+    img_root = '/Users/kayc/Downloads/man/'
+    sub_root = ['out1/', 'out2/', 'out3/', 'out4/', 'out5/']
+    start_offset = [0, 0, 0, 0, 0]
+
+    fps = 24  # 保存视频的FPS，可以适当调整
+
+    back_frame = cv2.imread('./back.png')
+    # 可以用(*'DVIX')或(*'X264'),如果都不行先装ffmepg: sudo apt-get install ffmepg
+    fourcc = cv2.VideoWriter_fourcc(*'MJPG')
+    videoWriter = cv2.VideoWriter('./danceVideo.avi', fourcc, fps, (512, 512))  # 最后一个是保存图片的尺寸
+
+    for i in range(1000):
+        # frame = cv2.imread(img_root + sub_root[0] + namefmt % (i + 1), -1)
+        frame = cv2.imread("/Users/kayc/Downloads/images-p/%05d_synthesized_image.jpg" % (i + 1))
+        frame = scale(frame, 0.2)
+        # frame = frame[:, :, :3]
+        print(frame.shape)
+        # back_frame = h_forpng(back_frame, frame, 0, 0)
+        # print(img_root + namefmt % (i + 1) + '.jpg')
+        videoWriter.write(frame)
+    videoWriter.release()
+
+# dancevideo()
+
+# def genvideox():
+#     back = np.zeros((1280, 1280, 3))
+#     namefmt = "%04d.png"
+#     # namefmt = "%05d_synthesized_image.jpg"
+#     # /Users/kayc/Downloads/man/out1/0000.png
+#     # /Users/kayc/Downloads/images-p/00012_synthesized_image.jpg
+#     # img_root = '/Users/kayc/Downloads/images-p/'
+#     img_root = '/Users/kayc/Downloads/man/out2/'
+#     fps = 24  # 保存视频的FPS，可以适当调整
+#
+#     # 可以用(*'DVIX')或(*'X264'),如果都不行先装ffmepg: sudo apt-get install ffmepg
+#     fourcc = cv2.VideoWriter_fourcc(*'MJPG')
+#     videoWriter = cv2.VideoWriter('saveVideo.avi', fourcc, fps, (1280, 720))  # 最后一个是保存图片的尺寸
+#
+#     for i in range(100):
+#         frame = cv2.imread(img_root + namefmt % (i + 1), -1)
+#         # scale(frame, 0.5)
+#         # back = h_forpng(back, frame, 0, 0)
+#         # frame=frame[:,:,:]
+#         # print(img_root + namefmt % (i + 1) + '.jpg')
+#         videoWriter.write(frame)
+#     videoWriter.release()
+#
+#
+# genvideox()
