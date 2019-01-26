@@ -2,25 +2,32 @@ import os
 import cv2
 import numpy as np
 
-namefmt = "%05d_synthesized_image.jpg"
-
 
 # namefmt = "%d.jpg"
 # img_root = '/Users/kayc/Downloads/123/'  # 这里写你的文件夹路径，比如：/home/youname/data/img/,注意最后一个文件夹要有斜杠
 
 
 def genvideo():
-    img_root = '/Users/kayc/Downloads/images/'
-    fps = 24  # 保存视频的FPS，可以适当调整
+    back = np.zeros((1280, 720, 3))
+    namefmt = "%04d.png"
+    # namefmt = "%05d_synthesized_image.jpg"
+    # /Users/kayc/Downloads/man/out1/0000.png
+    # /Users/kayc/Downloads/images-p/00012_synthesized_image.jpg
+    # img_root = '/Users/kayc/Downloads/images-p/'
+    img_root = '/Users/kayc/Downloads/man/out1/'
+    fps = 1  # 保存视频的FPS，可以适当调整
 
     # 可以用(*'DVIX')或(*'X264'),如果都不行先装ffmepg: sudo apt-get install ffmepg
     fourcc = cv2.VideoWriter_fourcc(*'MJPG')
-    videoWriter = cv2.VideoWriter('saveVideo.avi', fourcc, fps, (512, 512))  # 最后一个是保存图片的尺寸
+    videoWriter = cv2.VideoWriter('saveVideo.avi', fourcc, fps, (1280, 720))  # 最后一个是保存图片的尺寸
 
-    for i in range(1000):
-        frame = cv2.imread(img_root + namefmt % (i + 1))
+    for i in range(110):
+        frame = cv2.imread(img_root + namefmt % (i + 1), -1)
+        frame = frame[:, :, :3]
+        frame = cv2.resize(frame, (1280, 720))
         # print(img_root + namefmt % (i + 1) + '.jpg')
         videoWriter.write(frame)
+        print(frame.shape)
     videoWriter.release()
 
 
@@ -263,6 +270,83 @@ def genvideo_fromfile_p1():
               ]
     periods = [40, 50, 40]
     for i in range(2 * len(name)):
+        # frame = cv2.imread(img_root + name[i // 2])
+        print("1")
+        # frame = border(frame)
+        period = periods[i // 2]
+        s_scale = script[i][0][0]
+        t_scale = script[i][0][1]
+        s_x = script[i][1][0]
+        t_x = script[i][1][1]
+        s_y = script[i][2][0]
+        t_y = script[i][2][1]
+        print("2")
+        for j in range(period):
+            frame = cv2.imread(img_root + name[i // 2])
+            frame = border(frame)
+            # print((t_x - s_x) / period * j + s_x, (t_y - s_y) / period * j + t_y,
+            #       (t_scale - s_scale) / period * j + s_scale)/Users/kayc/Downloads/jumpres/00411.png
+
+            # person = cv2.flip(person, 1)
+            # person = cv2.imread("/Users/kayc/Downloads/123/%05d_synthesized_image.jpg" % (j + 300))
+            moon = cv2.imread("/Volumes/KHD/Proj/2019年01月16日GoogleHackathon/6矢量化素材/img_70.png", -1)
+            moon = scale(moon, 0.15)
+
+            # person = cv2.imread("/Volumes/KHD/Proj/2019年01月16日GoogleHackathon/6矢量化素材/img_70.png", -1)
+            # print("/Users/kayc/Downloads/123/%05d_synthesized_image.jpg" % (j + 1))
+            # print(person.shape)
+
+            if i in [0, 1]:
+                h_forpng(frame, moon, 50, 400)
+            if i in [2, 3]:
+                h_forpng(frame, moon, 50, 450)
+            if i in [2, 3]:
+                # if j == 0:
+                person = cv2.imread("/Users/kayc/Downloads/jumpres/%05d.png" % (j + 400 + 50 * max(i - 2, 0)), -1)
+                person = cv2.flip(person, 1)
+                person = scale(person, 0.7)
+                # pp = np.ones_like(person) * 255
+                # person = np.concatenate((person, pp), axis=2)
+                h_forpng(frame, person, 140, 70)
+
+            # h_forpng(frame, person, 50, 400)
+            f = crop(frame,
+                     int((t_x - s_x) / period * j + s_x),
+                     int((t_y - s_y) / period * j + s_y),
+                     (t_scale - s_scale) / period * j + s_scale
+                     )
+
+            f = cv2.cvtColor(f, cv2.COLOR_BGR2GRAY)
+            # f = np.hstack([f, f, f])
+
+            # print(img_root + namefmt % (i + 1) + '.jpg')
+
+            videoWriter.write(f)
+    print("3")
+    videoWriter.release()
+
+
+def genvideo_fromfile_p2():
+    img_root = '/Volumes/KHD/Proj/2019年01月16日GoogleHackathon/9p2/x/'
+    fps = 24  # 保存视频的FPS，可以适当调整
+    name = ['1.png', '2.png', '3.png', '4.png']
+    # name = ['1.png']
+
+    # 可以用(*'DVIX')或(*'X264'),如果都不行先装ffmepg: sudo apt-get install ffmepg
+    fourcc = cv2.VideoWriter_fourcc(*'MJPG')
+    videoWriter = cv2.VideoWriter('saveVideo.avi', fourcc, fps, (512, 512), isColor=False)  # 最后一个是保存图片的尺寸
+    # scale, (x_src,x_target)
+    script = [[[1.3, 1.1], [1, 0], [200, 0]],
+              [[1.1, 1.1], [0, 60], [0, 0]],
+              [[1.3, 1.1], [200, 20], [0, 30]],
+              [[1.1, 1.1], [20, 20], [30, 60]],
+              [[1.3, 1.1], [200, 20], [0, 30]],
+              [[1.1, 1.1], [20, 20], [30, 60]],
+              [[1.3, 1.1], [200, 20], [0, 30]],
+              [[1.1, 1.1], [20, 20], [30, 60]]
+              ]
+    periods = [50, 50, 50, 50]
+    for i in range(2 * len(name)):
         frame = cv2.imread(img_root + name[i // 2])
         print("1")
         frame = border(frame)
@@ -284,15 +368,15 @@ def genvideo_fromfile_p1():
             # person = cv2.imread("/Volumes/KHD/Proj/2019年01月16日GoogleHackathon/6矢量化素材/img_70.png", -1)
             # print("/Users/kayc/Downloads/123/%05d_synthesized_image.jpg" % (j + 1))
             # print(person.shape)
-            person = scale(person, 0.35)
-            pp = np.ones_like(person) * 255
-            person = np.concatenate((person, pp), axis=2)
-            if i in [0, 1]:
-                h_forpng(frame, moon, 50, 400)
-            if i in [2, 3]:
-                h_forpng(frame, moon, 50, 450)
-            if i in [2, 3]:
-                h_forpng(frame, person, 300, 100)
+            # person = scale(person, 0.35)
+            # pp = np.ones_like(person) * 255
+            # person = np.concatenate((person, pp), axis=2)
+            # if i in [0, 1]:
+            #     h_forpng(frame, moon, 50, 400)
+            # if i in [2, 3]:
+            #     h_forpng(frame, moon, 50, 450)
+            # if i in [2, 3]:
+            #     h_forpng(frame, person, 300, 100)
 
             # h_forpng(frame, person, 50, 400)
             f = crop(frame,
@@ -310,4 +394,85 @@ def genvideo_fromfile_p1():
     print("3")
     videoWriter.release()
 
-# genvideo_fromfile()
+
+# genvideo_fromfile_p1()
+# genvideo_fromfile_p2()
+
+def split_video():
+    import cv2
+
+    vc = cv2.VideoCapture('/Users/kayc/Downloads/3.mp4')  # 读入视频文件
+    c = 1
+    n = 1
+
+    if vc.isOpened():  # 判断是否正常打开
+        rval, frame = vc.read()
+    else:
+        rval = False
+
+    timeF = 3  # 视频帧计数间隔频率
+
+    while rval:  # 循环读取视频帧
+        rval, frame = vc.read()
+        if (c % timeF == 0):  # 每隔timeF帧进行存储操作
+            cv2.imwrite('img3/%04d.jpg' % n, frame)  # 存储为图像
+            n += 1
+        c = c + 1
+        cv2.waitKey(1)
+    vc.release()
+
+
+# split_video()
+
+def dancevideo():
+    # /Users/kayc/Downloads/images-p/00009_synthesized_image.jpg
+    namefmt = "%04d.png"
+    img_root = '/Users/kayc/Downloads/man/'
+    sub_root = ['out1/', 'out2/', 'out3/', 'out4/', 'out5/']
+    start_offset = [0, 0, 0, 0, 0]
+
+    fps = 24  # 保存视频的FPS，可以适当调整
+
+    back_frame = cv2.imread('./back.png')
+    # 可以用(*'DVIX')或(*'X264'),如果都不行先装ffmepg: sudo apt-get install ffmepg
+    fourcc = cv2.VideoWriter_fourcc(*'MJPG')
+    videoWriter = cv2.VideoWriter('./danceVideo.avi', fourcc, fps, (512, 512))  # 最后一个是保存图片的尺寸
+
+    for i in range(1000):
+        # frame = cv2.imread(img_root + sub_root[0] + namefmt % (i + 1), -1)
+        frame = cv2.imread("/Users/kayc/Downloads/images-p/%05d_synthesized_image.jpg" % (i + 1))
+        frame = scale(frame, 0.2)
+        # frame = frame[:, :, :3]
+        print(frame.shape)
+        # back_frame = h_forpng(back_frame, frame, 0, 0)
+        # print(img_root + namefmt % (i + 1) + '.jpg')
+        videoWriter.write(frame)
+    videoWriter.release()
+
+# dancevideo()
+
+# def genvideox():
+#     back = np.zeros((1280, 1280, 3))
+#     namefmt = "%04d.png"
+#     # namefmt = "%05d_synthesized_image.jpg"
+#     # /Users/kayc/Downloads/man/out1/0000.png
+#     # /Users/kayc/Downloads/images-p/00012_synthesized_image.jpg
+#     # img_root = '/Users/kayc/Downloads/images-p/'
+#     img_root = '/Users/kayc/Downloads/man/out2/'
+#     fps = 24  # 保存视频的FPS，可以适当调整
+#
+#     # 可以用(*'DVIX')或(*'X264'),如果都不行先装ffmepg: sudo apt-get install ffmepg
+#     fourcc = cv2.VideoWriter_fourcc(*'MJPG')
+#     videoWriter = cv2.VideoWriter('saveVideo.avi', fourcc, fps, (1280, 720))  # 最后一个是保存图片的尺寸
+#
+#     for i in range(100):
+#         frame = cv2.imread(img_root + namefmt % (i + 1), -1)
+#         # scale(frame, 0.5)
+#         # back = h_forpng(back, frame, 0, 0)
+#         # frame=frame[:,:,:]
+#         # print(img_root + namefmt % (i + 1) + '.jpg')
+#         videoWriter.write(frame)
+#     videoWriter.release()
+#
+#
+# genvideox()

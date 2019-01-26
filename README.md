@@ -1,5 +1,28 @@
 # Fight Collaborate
 
+# Intro：
+
+项目分为七个部分，如下图所示，除了Entity为抽象概念，不关联到具体项目。
+
+<img src="https://ws4.sinaimg.cn/large/006tNc79ly1fzk8q1ku73j31xs0ksq5a.jpg" width = "600px"/>
+
+
+1. text analysis：进行nlp分词，抽取意象和意象的动作。
+
+1. Material Library：素材库，即意象素材，分为背景库，人物库，动作库。例如：月亮，楼阁，山水图片等；老年、中年、青年的人物；走路、跑步、举臂的动作。
+
+1. Montion Transfer：动作迁移，将指定动作，迁移给指定人物（让人物做指定动作，例如举杯邀明月）。使用[EDN模型，Everybody Dance Now
+]，代码在[EverybodyDanceNow_reproduce_pytorch]文件夹。训练时长P100在4h左右。
+
+1. Segmentation：人物分割，将人物从背景中分离出来（实现将透明背景的人物合成到动画中）。使用[MaskRCNN模型]，具体为[Mask_RCNN]文件夹。分割时长，P100在5min/100帧左右。
+
+1. Style Transfer：风格迁移，将风景摄影图迁移成为中国水墨画风格。使用[CycleGAN模型]，代码在[cycle]文件夹中。训练时长，P100在Xh左右。
+
+1. Animation Synthesis：动画合成，使用逻辑代码，进行[素材定位，效果添加（缩放，平移），图片帧合并成视频]，进行动画的生成。
+
+1. Web Display：提供项目的介绍，生成视频的观看，生成视频接口的提供（暂无）。
+
+
 # presentation：
 
 1. step1: 出三个视频，分别让大家猜是哪首诗。
