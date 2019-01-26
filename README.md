@@ -14,7 +14,6 @@
 1. Material Library：素材库，即意象素材，分为背景库，人物库，动作库。例如：月亮，楼阁，山水图片等；老年、中年、青年的人物；走路、跑步、举臂的动作。
 
 
-
 1. Montion Transfer：动作迁移，将指定动作，迁移给指定人物（让人物做指定动作，例如举杯邀明月）。使用[EDN模型，Everybody Dance Now
 ]，代码在[EverybodyDanceNow_reproduce_pytorch]文件夹。训练时长P100在4h左右。
 
@@ -42,6 +41,9 @@
 
     <img src="https://ws4.sinaimg.cn/large/006tNc79ly1fzkg1ztrekj31jy0u0q7y.jpg" width = "500px"/>
 
+1. utils：包括项目使用到的爬虫，以及基于正片叠底的超分辨率的方法，都在[utils]文件夹下。
+
+    <img src="https://ws3.sinaimg.cn/large/006tNc79ly1fzkgezm4grj31ps0tu41f.jpg" width = "500px"/>
 
 
 # presentation：
