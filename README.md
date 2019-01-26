@@ -7,9 +7,7 @@
 <img src="https://ws4.sinaimg.cn/large/006tNc79ly1fzk8q1ku73j31xs0ksq5a.jpg" width = "700px"/>
 
 
-
-
-
+# Components：
 
 1. text analysis：进行nlp分词，抽取意象和意象的动作。
 
