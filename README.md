@@ -30,20 +30,22 @@
 1. Animation Synthesis：动画合成，使用逻辑代码，进行[素材定位，效果添加（缩放，平移），图片帧合并成视频]，进行动画的生成。
 
     <a href="https://drive.google.com/open?id=1s3_PyIyuE3N5ua9x5ZpuAlcaTP94Hc8F">
-    <img src="https://ws3.sinaimg.cn/large/006tNc79ly1fzkf2cemymj30u00u0wnl.jpg" width = "300px"/>
+    <img src="https://ws3.sinaimg.cn/large/006tNc79ly1fzkf2cemymj30u00u0wnl.jpg" width = "200px"/>
     </a>
     
     <a href="https://drive.google.com/open?id=1-tozNZNTcBmiHhRUf_MAt4Oj92JSyVb7">
-    <img src="https://ws1.sinaimg.cn/large/006tNc79ly1fzkf2equ8nj30u00u0k4v.jpg" width = "300px"/>
+    <img src="https://ws1.sinaimg.cn/large/006tNc79ly1fzkf2equ8nj30u00u0k4v.jpg" width = "200px"/>
     </a>
 
 1. Web Display：提供项目的介绍，生成视频的观看，生成视频接口的提供（暂无）。
 
-    <img src="https://ws4.sinaimg.cn/large/006tNc79ly1fzkg1ztrekj31jy0u0q7y.jpg" width = "500px"/>
+    <img src="https://ws4.sinaimg.cn/large/006tNc79ly1fzkg1ztrekj31jy0u0q7y.jpg" width = "400px"/>
 
 1. utils：包括项目使用到的爬虫，以及基于正片叠底的超分辨率的方法，都在[utils]文件夹下。
 
-    <img src="https://ws3.sinaimg.cn/large/006tNc79ly1fzkgezm4grj31ps0tu41f.jpg" width = "500px"/>
+    <img src="https://ws3.sinaimg.cn/large/006tNc79ly1fzkgezm4grj31ps0tu41f.jpg" width = "400px"/>
+
+
 
 
 # presentation：
@@ -55,6 +57,16 @@
 1. step3:项目意义：1、教育（故事+图片动画）。2、娱乐（体感交互+趣味竞猜）。3、弘扬传统文化。4、NLP+CV
 
 1. step4: 展望：1、丰富素材库。2、交互（语音+动作）。3、生成动画的画面逻辑（素材的物理意义）。
+
+1. PPT Link:
+    
+    [[ppt download link]](https://drive.google.com/file/d/1iZsU7W2ic8zwOXUGtq6i9LLJAnK3ieVS/view?usp=sharing)
+
+1. poster
+    
+    [[poster download link]](https://drive.google.com/file/d/1M_r4NBz63712jqkPsT15mRc9DAniJoag/view?usp=sharing)
+    
+    <img src="https://ws3.sinaimg.cn/large/006tNc79ly1fzkw86lyzvj30u0190tfs.jpg" width = "350px"/>
 
 # TODO：
 
