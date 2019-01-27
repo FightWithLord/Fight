@@ -9,25 +9,25 @@
 
 # Components：
 
-1. text analysis：进行nlp分词，抽取意象和意象的动作。
+1. text analysis: process word cutting, POS tagging, to extracting ‘poem image’ and the action of people.
 
-1. Material Library：素材库，即意象素材，分为背景库，人物库，动作库。例如：月亮，楼阁，山水图片等；老年、中年、青年的人物；走路、跑步、举臂的动作。
+1. Material Library: Poem image material is divided into 3 category, those are background database, character database, action database separatly. For example: moon, pavilion, landscape. Old, middle-aged, young people. Walking, running, arm movement etc.
 
+    <img src="https://ws1.sinaimg.cn/large/006tNc79ly1fzlj7f2lexj30uw0fvtar.jpg" width = "500px"/>
 
-1. Montion Transfer：动作迁移，将指定动作，迁移给指定人物（让人物做指定动作，例如举杯邀明月）。使用[EDN模型，Everybody Dance Now
-]，代码在[EverybodyDanceNow_reproduce_pytorch]文件夹。训练时长P100在4h左右。
+1. Montion Transfer: Transfer the specific action to the specific character (for example, ‘raise hand to invite the moon’, which is an action in a poem). Using EDN Model (Everybody Dance Now), contains 4 components, which are a pose detection (openpose project), pose normalization, a GAN model mapping from pose images to a target subject's appearance, another GAN model adding additional realistic face synthesis. The model is open-source. code in[EverybodyDanceNow_reproduce_pytorch]folder。
 
     <img src="https://ws2.sinaimg.cn/large/006tNc79ly1fzkfwufky4j31n70mxmyp.jpg" width = "500px"/>
     <br/>
     <img src="https://ws2.sinaimg.cn/large/006tNc79ly1fzkfwu911lj31m50k8myj.jpg" width = "500px"/>
 
-1. Segmentation：人物分割，将人物从背景中分离出来（实现将透明背景的人物合成到动画中）。使用[MaskRCNN模型]，具体为[Mask_RCNN]文件夹。分割时长，P100在5min/100帧左右。
+1. Segmentation: Separate characters from the background (realizing that synthesize the characters with transparent backgrounds into animations). The model is an open-source implementation of Mask R-CNN. The model generates bounding boxes and segmentation masks for each instance of an object in the image. It's based on Feature Pyramid Network (FPN) and a ResNet101 backbone.
 
-1. Style Transfer：风格迁移，将风景摄影图迁移成为中国水墨画风格。使用[CycleGAN模型]，代码在[cycle]文件夹中。训练时长，P100在Xh左右。
+1. Style Transfer: Tranfer scenery picture into the Chinese ancient ink painting style. Using cycle GAN model, which introducing a cycle consistency loss to constraint image transfer result and transfer back result. The dataset of source domain and target domain were crawling by ourselves. We propose a super-resolution method of positive stacked bottom for dealing the low resolution problem. The cycle GAN model is open-source. code in [cycle] folder.
 
     <img src="https://ws1.sinaimg.cn/large/006tNc79ly1fzkfrdhqanj31qw0s2twv.jpg" width = "500px"/>
 
-1. Animation Synthesis：动画合成，使用逻辑代码，进行[素材定位，效果添加（缩放，平移），图片帧合并成视频]，进行动画的生成。
+1. Animation Synthesis: Synthesis process contains 3 component, that is material location, effect addition (zooming, shifting), frames to video. There can be some hard rules now, and more NLP comprehension in future.
 
     <a href="https://drive.google.com/open?id=1s3_PyIyuE3N5ua9x5ZpuAlcaTP94Hc8F">
     <img src="https://ws3.sinaimg.cn/large/006tNc79ly1fzkf2cemymj30u00u0wnl.jpg" width = "200px"/>
@@ -37,16 +37,13 @@
     <img src="https://ws1.sinaimg.cn/large/006tNc79ly1fzkf2equ8nj30u00u0k4v.jpg" width = "200px"/>
     </a>
 
-1. Web Display：提供项目的介绍，生成视频的观看，生成视频接口的提供（暂无）。
+1. Web Display: Providing project introduction, video list for watching.
 
     <img src="https://ws4.sinaimg.cn/large/006tNc79ly1fzkg1ztrekj31jy0u0q7y.jpg" width = "400px"/>
 
-1. utils：包括项目使用到的爬虫，以及基于正片叠底的超分辨率的方法，都在[utils]文件夹下。
+1. utils：The crawler used by the project, as well as the super-resolution method based on the bottom of a positive chip, are in the [utils] folder.
 
     <img src="https://ws3.sinaimg.cn/large/006tNc79ly1fzkgezm4grj31ps0tu41f.jpg" width = "400px"/>
-
-
-
 
 # presentation：
 
